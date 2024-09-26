@@ -8,6 +8,7 @@ import AuthenticationFormLayout from "../AuthenticationFormLayout";
 import { AuthToken, FakeData, User } from "tweeter-shared";
 import { Buffer } from "buffer";
 import useToastListener from "../../toaster/ToastListenerHook";
+import AuthenticationField from "../AuthenticationField";
 
 const Register = () => {
   const [firstName, setFirstName] = useState("");
@@ -131,53 +132,42 @@ const Register = () => {
   const inputFieldGenerator = () => {
     return (
       <>
-        <div className="form-floating">
-          <input
-            type="text"
-            className="form-control"
-            size={50}
-            id="firstNameInput"
-            placeholder="First Name"
-            onKeyDown={registerOnEnter}
-            onChange={(event) => setFirstName(event.target.value)}
-          />
-          <label htmlFor="firstNameInput">First Name</label>
-        </div>
-        <div className="form-floating">
-          <input
-            type="text"
-            className="form-control"
-            size={50}
-            id="lastNameInput"
-            placeholder="Last Name"
-            onKeyDown={registerOnEnter}
-            onChange={(event) => setLastName(event.target.value)}
-          />
-          <label htmlFor="lastNameInput">Last Name</label>
-        </div>
-        <div className="form-floating">
-          <input
-            type="text"
-            className="form-control"
-            size={50}
-            id="aliasInput"
-            placeholder="name@example.com"
-            onKeyDown={registerOnEnter}
-            onChange={(event) => setAlias(event.target.value)}
-          />
-          <label htmlFor="aliasInput">Alias</label>
-        </div>
-        <div className="form-floating">
-          <input
-            type="password"
-            className="form-control"
-            id="passwordInput"
-            placeholder="Password"
-            onKeyDown={registerOnEnter}
-            onChange={(event) => setPassword(event.target.value)}
-          />
-          <label htmlFor="passwordInput">Password</label>
-        </div>
+        <AuthenticationField 
+          type="text"
+          className="form-control"
+          id="firstNameInput"
+          name="First Name"
+          placeholder="First Name"
+          keyDownHandler={registerOnEnter}
+          onChangeHandler={(event) => setFirstName(event.target.value)}
+        />
+        <AuthenticationField 
+          type="text"
+          className="form-control"
+          id="lastNameInput"
+          name="Last Name"
+          placeholder="Last Name"
+          keyDownHandler={registerOnEnter}
+          onChangeHandler={(event) => setLastName(event.target.value)}
+        />
+        <AuthenticationField 
+          type="text"
+          className="form-control"
+          id="aliasInput"
+          name="Alias"
+          placeholder="name@example.com"
+          keyDownHandler={registerOnEnter}
+          onChangeHandler={(event) => setAlias(event.target.value)}
+        />
+        <AuthenticationField 
+          type="password"
+          className="form-control bottom"
+          id="passwordInput"
+          name="Password"
+          placeholder="Password"
+          keyDownHandler={registerOnEnter}
+          onChangeHandler={(event) => setPassword(event.target.value)}
+        />
         <div className="form-floating mb-3">
           <input
             type="file"
