@@ -2,7 +2,7 @@ import { User } from "tweeter-shared";
 import { Link } from "react-router-dom";
 import useToastListener from "../toaster/ToastListenerHook";
 import useUserInfo from "../userInfo/UserInfoHook";
-import { UserItemView, UserItemPresenter } from "../../presenters/UserItemPresenter";
+import { UserItemView, UserItemPresenter } from "../../presenters/user/UserItemPresenter";
 import { useState } from "react";
 
 interface Props {

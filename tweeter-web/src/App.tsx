@@ -10,13 +10,15 @@ import Login from "./components/authentication/login/Login";
 import Register from "./components/authentication/register/Register";
 import MainLayout from "./components/mainLayout/MainLayout";
 import Toaster from "./components/toaster/Toaster";
-import { AuthToken, FakeData, Status } from "tweeter-shared";
 import UserItemScroller from "./components/mainLayout/UserItemScroller";
 import StatusItemScroller from "./components/mainLayout/StatusItemScroller";
 import useUserInfo from "./components/userInfo/UserInfoHook";
-import { FolloweePresenter } from "./presenters/FolloweePresenter";
-import { UserItemListView } from "./presenters/UserItemListPresenter";
-import { FollowerPresenter } from "./presenters/FollowerPresenter";
+import { FolloweePresenter } from "./presenters/user/FolloweePresenter";
+import { UserItemListView } from "./presenters/user/UserItemListPresenter";
+import { FollowerPresenter } from "./presenters/user/FollowerPresenter";
+import { FeedPresenter } from "./presenters/status/FeedPresenter";
+import { StatusItemListView } from "./presenters/status/StatusItemListPresenter";
+import { StoryPresenter } from "./presenters/status/StoryPresenter";
 
 const App = () => {
   const { currentUser, authToken } = useUserInfo();
@@ -40,43 +42,21 @@ const App = () => {
 };
 
 const AuthenticatedRoutes = () => {
-  const loadMoreFeedItems = async (
-    authToken: AuthToken,
-    userAlias: string,
-    pageSize: number,
-    lastItem: Status | null
-  ): Promise<[Status[], boolean]> => {
-    // TODO: Replace with the result of calling server
-    return FakeData.instance.getPageOfStatuses(lastItem, pageSize);
-  };
-
-  const loadMoreStoryItems = async (
-    authToken: AuthToken,
-    userAlias: string,
-    pageSize: number,
-    lastItem: Status | null
-  ): Promise<[Status[], boolean]> => {
-    // TODO: Replace with the result of calling server
-    return FakeData.instance.getPageOfStatuses(lastItem, pageSize);
-  };
-
   return (
     <Routes>
       <Route element={<MainLayout />}>
         <Route index element={<Navigate to="/feed" />} />
         <Route path="feed" element=
           {
-            <StatusItemScroller 
-              loadMoreItems={loadMoreFeedItems}
-              itemTypeDescription="feed"
+            <StatusItemScroller
+              presenterGenerator={(view: StatusItemListView) => new FeedPresenter(view)}
             />
           } 
         />
         <Route path="story" element=
           {
-            <StatusItemScroller 
-              loadMoreItems={loadMoreStoryItems}
-              itemTypeDescription="story"
+            <StatusItemScroller
+              presenterGenerator={(view: StatusItemListView) => new StoryPresenter(view)}
             />
           } 
         />

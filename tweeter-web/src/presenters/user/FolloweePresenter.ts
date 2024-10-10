@@ -1,5 +1,5 @@
 import { AuthToken } from "tweeter-shared";
-import { FollowService } from "../service/FollowService";
+import { FollowService } from "../../service/FollowService";
 import { UserItemListPresenter, UserItemListView } from "./UserItemListPresenter";
 
 export const PAGE_SIZE = 10;
