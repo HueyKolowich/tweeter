@@ -1,50 +1,30 @@
-import { User, AuthToken, FakeData } from "tweeter-shared";
+import { User } from "tweeter-shared";
 import useToastListener from "../toaster/ToastListenerHook";
 import useUserInfo from "./UserInfoHook";
+import { useState } from "react";
+import { UserItemView, UserItemPresenter } from "../../presenters/user/UserItemPresenter";
 
 interface UserNavigation {
-    navigateToUser: (event: React.MouseEvent) => Promise<void>
+  navigateToUser: (event: React.MouseEvent) => Promise<void>
 }
 
 const useUserNavigation = (): UserNavigation => {
     const { setDisplayedUser, currentUser, authToken } = useUserInfo();
     const { displayErrorMessage } = useToastListener();
 
-    const navigateToUser = async (event: React.MouseEvent): Promise<void> => {
-        event.preventDefault();
-    
-        try {
-          const alias = extractAlias(event.target.toString());
-    
-          const user = await getUser(authToken!, alias);
-    
-          if (!!user) {
-            if (currentUser!.equals(user)) {
-              setDisplayedUser(currentUser!);
-            } else {
-              setDisplayedUser(user);
-            }
-          }
-        } catch (error) {
-          displayErrorMessage(`Failed to get user because of exception: ${error}`);
-        }
-      };
-    
-      const extractAlias = (value: string): string => {
-        const index = value.indexOf("@");
-        return value.substring(index);
-      };
-    
-      const getUser = async (
-        authToken: AuthToken,
-        alias: string
-      ): Promise<User | null> => {
-        // TODO: Replace with the result of calling server
-        return FakeData.instance.findUserByAlias(alias);
-      };
+    const listener: UserItemView = {
+      changeDisplayedUser: (user: User) => setDisplayedUser(user),
+      displayErrorMessage: displayErrorMessage
+    }
+  
+    const [presenter] = useState(new UserItemPresenter(listener));
+  
+    const navigateToUser = (event: React.MouseEvent): Promise<void> => {
+      return presenter.navigateToUser(event, authToken!, currentUser!);
+    };
 
     return {
-        navigateToUser
+      navigateToUser
     };
 };
 
