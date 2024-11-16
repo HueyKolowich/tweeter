@@ -29,14 +29,14 @@ const UserInfo = () => {
   }, [displayedUser]);
 
   const listener: UserInfoView = {
-    setIsFollower: (status: boolean) => setIsFollower(status),
-    setFolloweeCount: (count: number) => setFolloweeCount(count),
-    setFollowerCount: (count: number) => setFollowerCount(count),
-    setDisplayedUser: (user: User) => setDisplayedUser(user),
-    setIsLoading: (status: boolean) => setIsLoading(status),
-    displayInfoMessage: (message: string, duration: number) => displayInfoMessage(message, duration),
-    displayErrorMessage: (message: string) => displayErrorMessage(message),
-    clearLastInfoMessage: () => clearLastInfoMessage()
+    setIsFollower: setIsFollower,
+    setFolloweeCount: setFolloweeCount,
+    setFollowerCount: setFollowerCount,
+    setDisplayedUser: setDisplayedUser,
+    setIsLoading: setIsLoading,
+    displayInfoMessage: displayInfoMessage,
+    displayErrorMessage: displayErrorMessage,
+    clearLastInfoMessage: clearLastInfoMessage
   };
     
   const [presenter] = useState(new UserInfoPresenter(listener));

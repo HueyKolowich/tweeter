@@ -13,11 +13,11 @@ const PostStatus = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const listener: PostStatusView = {
-    setPost: (value: string) => setPost(value),
-    setIsLoading: (status: boolean) => setIsLoading(status),
-    displayInfoMessage: (message: string, duration: number) => displayInfoMessage(message, duration),
-    displayErrorMessage: (message: string) => displayErrorMessage(message),
-    clearLastInfoMessage: () => clearLastInfoMessage
+    setPost: setPost,
+    setIsLoading: setIsLoading,
+    displayInfoMessage: displayInfoMessage,
+    displayErrorMessage: displayErrorMessage,
+    clearLastInfoMessage: clearLastInfoMessage
   };
 
   const [presenter] = useState(new PostStatusPresenter(listener));

@@ -46,7 +46,7 @@ const UserItemScroller = (props: Props) => {
   }
 
   const listener: UserItemListView = {
-    addItems: (newItems: User[]) => setNewItems(newItems),
+    addItems: setNewItems,
     displayErrorMessage: displayErrorMessage
   };
 

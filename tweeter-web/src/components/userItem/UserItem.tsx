@@ -15,7 +15,7 @@ const UserItem = (props: Props) => {
     useUserInfo();
 
   const listener: UserItemView = {
-    changeDisplayedUser: (user: User) => setDisplayedUser(user),
+    changeDisplayedUser: setDisplayedUser,
     displayErrorMessage: displayErrorMessage
   }
 

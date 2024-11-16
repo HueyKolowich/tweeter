@@ -47,7 +47,7 @@ const StatusItemScroller = (props: Props) => {
     }
 
     const listener: StatusItemListView = {
-        addItems: (newItems: Status[]) => setNewItems(newItems),
+        addItems: setNewItems,
         displayErrorMessage: displayErrorMessage
     };
     
