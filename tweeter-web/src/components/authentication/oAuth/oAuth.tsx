@@ -2,6 +2,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import useToastListener from '../../toaster/ToastListenerHook';
 import { IconName, IconPrefix } from "@fortawesome/fontawesome-svg-core";
+import { OAuthPresenter, OAuthView } from "../../../presenters/authentication/OAuthPresenter";
+import { useState } from "react";
 
 interface Props {
     toastMessage: string
@@ -13,8 +15,14 @@ interface Props {
 const OAuth = (props: Props) => {
     const { displayInfoMessage } = useToastListener();
 
+    const listener: OAuthView = {
+        displayInfoMessage: displayInfoMessage
+    }
+
+    const [presenter] = useState(new OAuthPresenter(listener));
+
     const displayInfoMessageWithDarkBackground = (message: string): void => {
-      displayInfoMessage(message, 3000, "text-white bg-primary");
+        presenter.displayInfoMessageWithDarkBackground(message);
     };
 
     return (
