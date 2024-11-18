@@ -1,29 +1,19 @@
 import { Buffer } from "buffer";
 import { ChangeEvent } from "react";
-import { User, AuthToken } from "tweeter-shared";
 import { UserService } from "../../service/UserService";
+import { NavigatorView, Presenter } from "../Presenter";
 
-export interface RegisterView {
+export interface RegisterView extends NavigatorView {
     setImageUrl: (url: string) => void
     setImageBytes: (data: Uint8Array) => void
     setImageFileExtension: (extension: string) => void
-    setIsLoading: (value: boolean) => void
-    updateUserInfo: (
-        currentUser: User, 
-        displayedUser: User | null, 
-        authToken: AuthToken, 
-        remember: boolean
-    ) => void
-    navigate: (path: string) => void
-    displayErrorMessage: (message: string) => void
 }
 
-export class RegistrationPresenter {
-    private view: RegisterView;
+export class RegistrationPresenter extends Presenter<RegisterView> {
     private userService: UserService;
 
     public constructor(view: RegisterView) {
-        this.view = view;
+        super(view);
         this.userService = new UserService();
     }
 

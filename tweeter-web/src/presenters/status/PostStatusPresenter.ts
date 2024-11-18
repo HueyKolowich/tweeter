@@ -1,20 +1,17 @@
 import { AuthToken, Status, User } from "tweeter-shared";
 import { StatusService } from "../../service/StatusService";
+import { MessageView, Presenter } from "../Presenter";
 
-export interface PostStatusView {
+export interface PostStatusView extends MessageView {
     setPost: (value: string) => void
     setIsLoading: (status: boolean) => void
-    displayInfoMessage: (message: string, duration: number) => void
-    displayErrorMessage: (message: string) => void
-    clearLastInfoMessage: () => void
 }
 
-export class PostStatusPresenter {
-    private _view: PostStatusView;
+export class PostStatusPresenter extends Presenter<PostStatusView> {
     private statusService: StatusService;
 
     constructor(view: PostStatusView) {
-        this._view = view;
+        super(view);
         this.statusService = new StatusService();
     }
 
@@ -22,27 +19,27 @@ export class PostStatusPresenter {
         event.preventDefault();
     
         try {
-          this._view.setIsLoading(true);
-          this._view.displayInfoMessage("Posting status...", 0);
+          this.view.setIsLoading(true);
+          this.view.displayInfoMessage("Posting status...", 0);
     
           const status = new Status(post, currentUser, Date.now());
     
           await this.statusService.postStatus(authToken, status);
     
-          this._view.setPost("");
-          this._view.displayInfoMessage("Status posted!", 2000);
+          this.view.setPost("");
+          this.view.displayInfoMessage("Status posted!", 2000);
         } catch (error) {
-            this._view.displayErrorMessage(
+            this.view.displayErrorMessage(
             `Failed to post the status because of exception: ${error}`
           );
         } finally {
-            this._view.clearLastInfoMessage();
-            this._view.setIsLoading(false);
+            this.view.clearLastInfoMessage();
+            this.view.setIsLoading(false);
         }
     };
 
     public clearPost(event: React.MouseEvent) {
         event.preventDefault();
-        this._view.setPost("");
+        this.view.setPost("");
     };
 }

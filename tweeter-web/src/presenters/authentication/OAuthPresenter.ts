@@ -1,12 +1,8 @@
-export interface OAuthView {
-    displayInfoMessage: (message: string, duration: number, bootstrapClasses?: string) => void
-}
+import { Presenter, InfoView } from "../Presenter";
 
-export class OAuthPresenter {
-    private view: OAuthView;
-
-    public constructor(view: OAuthView) {
-        this.view = view;
+export class OAuthPresenter extends Presenter<InfoView> {
+    public constructor(view: InfoView) {
+        super(view);
     }
 
     public displayInfoMessageWithDarkBackground(message: string): void {
