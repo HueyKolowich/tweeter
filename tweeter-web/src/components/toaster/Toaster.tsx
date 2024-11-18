@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Toast } from "react-bootstrap";
 import useToaster from "./ToastHook";
 import { ToasterPresenter, ToasterView } from "../../presenters/toaster/ToasterPresenter";
+import useToastListener from "./ToastListenerHook";
 
 interface Props {
   position: string;
@@ -10,6 +11,7 @@ interface Props {
 
 const Toaster = ({ position }: Props) => {
   const { toastList, deleteToast } = useToaster();
+  const { displayErrorMessage } = useToastListener();
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -25,7 +27,8 @@ const Toaster = ({ position }: Props) => {
   }, [toastList]);
 
   const listener: ToasterView = {
-    deleteToast: deleteToast
+    deleteToast: deleteToast,
+    displayErrorMessage: displayErrorMessage
   }
 
   const [presenter] = useState(new ToasterPresenter(listener));

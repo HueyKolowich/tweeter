@@ -4,10 +4,11 @@ import { useState, useEffect } from "react";
 import { Status } from "tweeter-shared";
 import useToastListener from "../toaster/ToastListenerHook";
 import useUserInfo from "../userInfo/UserInfoHook";
-import { StatusItemListView, StatusItemListPresenter } from "../../presenters/status/StatusItemListPresenter";
+import { StatusItemListPresenter } from "../../presenters/status/StatusItemListPresenter";
+import { ItemListView } from "../../presenters/PagedPresenter";
 
 interface Props {
-    presenterGenerator: (view: StatusItemListView) => StatusItemListPresenter;
+    presenterGenerator: (view: ItemListView<Status>) => StatusItemListPresenter;
 }
 
 const StatusItemScroller = (props: Props) => {
@@ -46,7 +47,7 @@ const StatusItemScroller = (props: Props) => {
         presenter.reset();
     }
 
-    const listener: StatusItemListView = {
+    const listener: ItemListView<Status> = {
         addItems: setNewItems,
         displayErrorMessage: displayErrorMessage
     };

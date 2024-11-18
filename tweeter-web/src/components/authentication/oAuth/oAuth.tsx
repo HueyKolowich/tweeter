@@ -13,10 +13,11 @@ interface Props {
 }
 
 const OAuth = (props: Props) => {
-    const { displayInfoMessage } = useToastListener();
+    const { displayInfoMessage, displayErrorMessage } = useToastListener();
 
     const listener: OAuthView = {
-        displayInfoMessage: displayInfoMessage
+        displayInfoMessage: displayInfoMessage,
+        displayErrorMessage: displayErrorMessage
     }
 
     const [presenter] = useState(new OAuthPresenter(listener));

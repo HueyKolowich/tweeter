@@ -1,7 +1,7 @@
 import { Toast } from "../../components/toaster/Toast";
-import { ErrorView, Presenter } from "../Presenter";
+import { View, Presenter } from "../Presenter";
 
-export interface ToasterView extends ErrorView {
+export interface ToasterView extends View {
     deleteToast: (id: string) => void
 }
 

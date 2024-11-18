@@ -4,10 +4,11 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import UserItem from "../userItem/UserItem";
 import useToastListener from "../toaster/ToastListenerHook";
 import useUserInfo from "../userInfo/UserInfoHook";
-import { UserItemListPresenter, UserItemListView } from "../../presenters/user/UserItemListPresenter";
+import { UserItemListPresenter } from "../../presenters/user/UserItemListPresenter";
+import { ItemListView } from "../../presenters/PagedPresenter";
 
 interface Props {
-  presenterGenerator: (view: UserItemListView) => UserItemListPresenter;
+  presenterGenerator: (view: ItemListView<User>) => UserItemListPresenter;
 }
 
 const UserItemScroller = (props: Props) => {
@@ -45,7 +46,7 @@ const UserItemScroller = (props: Props) => {
     presenter.reset();
   }
 
-  const listener: UserItemListView = {
+  const listener: ItemListView<User> = {
     addItems: setNewItems,
     displayErrorMessage: displayErrorMessage
   };

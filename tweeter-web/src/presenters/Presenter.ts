@@ -1,19 +1,15 @@
 import { User, AuthToken } from "tweeter-shared"
 
-export interface ErrorView {
+export interface View {
     displayErrorMessage: (message: string) => void
 }
 
-export interface InfoView {
-    displayInfoMessage: (message: string, duration: number, bootstrapClasses?: string) => void
-}
-
-export interface MessageView extends ErrorView {
+export interface MessageView extends View {
     displayInfoMessage: (message: string, duration: number, bootstrapClasses?: string) => void
     clearLastInfoMessage: () => void
 }
 
-export interface NavigatorView extends ErrorView {
+export interface NavigatorView extends View {
     setIsLoading: (value: boolean) => void
     updateUserInfo: (
         currentUser: User, 
@@ -24,7 +20,7 @@ export interface NavigatorView extends ErrorView {
     navigate: (path: string) => void
 }
 
-export class Presenter<V extends ErrorView | InfoView> {
+export class Presenter<V extends View> {
     private _view: V;
 
     protected constructor(view: V) {
@@ -34,4 +30,17 @@ export class Presenter<V extends ErrorView | InfoView> {
     protected get view(): V {
         return this._view;
     }
+
+    protected async doAsyncFailureReportingOperation(
+        operation: () => Promise<void>, 
+        operationDescription: string
+    ): Promise<void> {
+        try {
+            await operation();
+        } catch (error) {
+            this.view.displayErrorMessage(
+                `Failed to ${operationDescription} because of exception: ${error}`
+            );
+        }
+    }; 
 }

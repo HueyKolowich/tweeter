@@ -14,11 +14,11 @@ import UserItemScroller from "./components/mainLayout/UserItemScroller";
 import StatusItemScroller from "./components/mainLayout/StatusItemScroller";
 import useUserInfo from "./components/userInfo/UserInfoHook";
 import { FolloweePresenter } from "./presenters/user/FolloweePresenter";
-import { UserItemListView } from "./presenters/user/UserItemListPresenter";
 import { FollowerPresenter } from "./presenters/user/FollowerPresenter";
 import { FeedPresenter } from "./presenters/status/FeedPresenter";
-import { StatusItemListView } from "./presenters/status/StatusItemListPresenter";
 import { StoryPresenter } from "./presenters/status/StoryPresenter";
+import { ItemListView } from "./presenters/PagedPresenter";
+import { Status, User } from "tweeter-shared";
 
 const App = () => {
   const { currentUser, authToken } = useUserInfo();
@@ -49,14 +49,14 @@ const AuthenticatedRoutes = () => {
         <Route path="feed" element=
           {
             <StatusItemScroller
-              presenterGenerator={(view: StatusItemListView) => new FeedPresenter(view)}
+              presenterGenerator={(view: ItemListView<Status>) => new FeedPresenter(view)}
             />
           } 
         />
         <Route path="story" element=
           {
             <StatusItemScroller
-              presenterGenerator={(view: StatusItemListView) => new StoryPresenter(view)}
+              presenterGenerator={(view: ItemListView<Status>) => new StoryPresenter(view)}
             />
           } 
         />
@@ -65,7 +65,7 @@ const AuthenticatedRoutes = () => {
           element={
             <UserItemScroller
               key={1}
-              presenterGenerator={(view: UserItemListView) => new FolloweePresenter(view)}
+              presenterGenerator={(view: ItemListView<User>) => new FolloweePresenter(view)}
             />
           }
         />
@@ -74,7 +74,7 @@ const AuthenticatedRoutes = () => {
           element={
             <UserItemScroller
               key={2}
-              presenterGenerator={(view: UserItemListView) => new FollowerPresenter(view)}
+              presenterGenerator={(view: ItemListView<User>) => new FollowerPresenter(view)}
             />
           }
         />

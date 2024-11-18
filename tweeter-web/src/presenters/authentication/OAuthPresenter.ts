@@ -1,7 +1,11 @@
-import { Presenter, InfoView } from "../Presenter";
+import { Presenter, View } from "../Presenter";
 
-export class OAuthPresenter extends Presenter<InfoView> {
-    public constructor(view: InfoView) {
+export interface OAuthView extends View {
+    displayInfoMessage: (message: string, duration: number, bootstrapClasses?: string) => void
+}
+
+export class OAuthPresenter extends Presenter<OAuthView> {
+    public constructor(view: OAuthView) {
         super(view);
     }
 

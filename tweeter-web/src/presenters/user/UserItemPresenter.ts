@@ -1,8 +1,8 @@
 import { AuthToken, User } from "tweeter-shared";
 import { UserService } from "../../service/UserService";
-import { ErrorView, Presenter } from "../Presenter";
+import { View, Presenter } from "../Presenter";
 
-export interface UserItemView extends ErrorView {
+export interface UserItemView extends View {
     changeDisplayedUser: (user: User) => void
 }
 
@@ -16,8 +16,8 @@ export class UserItemPresenter extends Presenter<UserItemView> {
 
     public async navigateToUser(event: React.MouseEvent, authToken: AuthToken, currentUser: User): Promise<void> {
         event.preventDefault();
-    
-        try {
+
+        this.doAsyncFailureReportingOperation(async () => {
           const alias = this.extractAlias(event.target.toString());
     
           const user = await this.userService.getUser(authToken!, alias);
@@ -29,9 +29,7 @@ export class UserItemPresenter extends Presenter<UserItemView> {
               this.view.changeDisplayedUser(user);
             }
           }
-        } catch (error) {
-          this.view.displayErrorMessage(`Failed to get user because of exception: ${error}`);
-        }
+        }, 'get user');
     };
     
     private extractAlias(value: string): string {

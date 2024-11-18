@@ -117,23 +117,21 @@ export class RegistrationPresenter extends Presenter<RegisterView> {
         rememberMe: boolean
     ) {
         try {
-          this.view.setIsLoading(true);
+          this.doAsyncFailureReportingOperation(async () => {
+            this.view.setIsLoading(true);
     
-          const [user, authToken] = await this.userService.register(
-            firstName,
-            lastName,
-            alias,
-            password,
-            imageBytes,
-            imageFileExtension
-          );
-    
-          this.view.updateUserInfo(user, user, authToken, rememberMe);
-          this.view.navigate("/");
-        } catch (error) {
-          this.view.displayErrorMessage(
-            `Failed to register user because of exception: ${error}`
-          );
+            const [user, authToken] = await this.userService.register(
+              firstName,
+              lastName,
+              alias,
+              password,
+              imageBytes,
+              imageFileExtension
+            );
+      
+            this.view.updateUserInfo(user, user, authToken, rememberMe);
+            this.view.navigate("/");
+          }, 'register user');
         } finally {
           this.view.setIsLoading(false);
         }
