@@ -1,7 +1,7 @@
 import { Buffer } from "buffer";
 import { ChangeEvent } from "react";
-import { UserService } from "../../service/UserService";
-import { NavigatorView, Presenter } from "../Presenter";
+import { NavigatorView } from "../Presenter";
+import { ValidateAndNavigatePresenter } from "../ValidateAndNavigatePresenter";
 
 export interface RegisterView extends NavigatorView {
     setImageUrl: (url: string) => void
@@ -9,14 +9,7 @@ export interface RegisterView extends NavigatorView {
     setImageFileExtension: (extension: string) => void
 }
 
-export class RegistrationPresenter extends Presenter<RegisterView> {
-    private userService: UserService;
-
-    public constructor(view: RegisterView) {
-        super(view);
-        this.userService = new UserService();
-    }
-
+export class RegistrationPresenter extends ValidateAndNavigatePresenter<RegisterView> {
     public checkSubmitButtonStatus(
         firstName: string,
         lastName: string,
@@ -25,13 +18,13 @@ export class RegistrationPresenter extends Presenter<RegisterView> {
         imageUrl: string,
         imageFileExtension: string
     ): boolean {
-        return (
-          !firstName ||
-          !lastName ||
-          !alias ||
-          !password ||
-          !imageUrl ||
-          !imageFileExtension
+        return this.doCheckButtonStatus(
+          firstName,
+          lastName,
+          alias,
+          password,
+          imageUrl,
+          imageFileExtension
         );
     };
 
@@ -116,24 +109,18 @@ export class RegistrationPresenter extends Presenter<RegisterView> {
         imageFileExtension: string,
         rememberMe: boolean
     ) {
-        try {
-          this.doAsyncFailureReportingOperation(async () => {
-            this.view.setIsLoading(true);
-    
-            const [user, authToken] = await this.userService.register(
-              firstName,
-              lastName,
-              alias,
-              password,
-              imageBytes,
-              imageFileExtension
-            );
-      
-            this.view.updateUserInfo(user, user, authToken, rememberMe);
-            this.view.navigate("/");
-          }, 'register user');
-        } finally {
-          this.view.setIsLoading(false);
-        }
+        this.doAuthenticationWithLoading(
+          async () => this.service.register(
+            firstName,
+            lastName,
+            alias,
+            password,
+            imageBytes,
+            imageFileExtension
+          ),
+          () => this.view.navigate("/"),
+          rememberMe,
+          'register user'
+        );
     };
 }

@@ -1,16 +1,9 @@
-import { UserService } from "../../service/UserService";
-import { NavigatorView, Presenter } from "../Presenter";
+import { NavigatorView } from "../Presenter";
+import { ValidateAndNavigatePresenter } from "../ValidateAndNavigatePresenter";
 
-export class LoginPresenter extends Presenter<NavigatorView> {
-    private userService: UserService;
-
-    public constructor(view: NavigatorView) {
-        super(view);
-        this.userService = new UserService();
-    }
-
+export class LoginPresenter extends ValidateAndNavigatePresenter<NavigatorView> {
     public checkSubmitButtonStatus(alias: string, password: string): boolean {
-        return !alias || !password;
+        return this.doCheckButtonStatus(alias, password);
     };
 
     public loginOnEnter(
@@ -31,22 +24,17 @@ export class LoginPresenter extends Presenter<NavigatorView> {
         rememberMe: boolean,
         originalUrl: string | undefined
     ) {
-        try {
-          this.doAsyncFailureReportingOperation(async () => {
-            this.view.setIsLoading(true);
-      
-            const [user, authToken] = await this.userService.login(alias, password);
-      
-            this.view.updateUserInfo(user, user, authToken, rememberMe);
-      
+        this.doAuthenticationWithLoading(
+          async () => this.service.login(alias, password),
+          () => {
             if (!!originalUrl) {
               this.view.navigate(originalUrl);
             } else {
               this.view.navigate("/");
             }
-          }, 'log user in');
-        } finally {
-          this.view.setIsLoading(false);
-        }
+          },
+          rememberMe,
+          'log user in'
+        );
     };
 }
