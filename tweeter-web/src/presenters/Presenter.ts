@@ -20,7 +20,7 @@ export interface NavigatorView extends View {
     navigate: (path: string) => void
 }
 
-export class Presenter<V extends View> {
+export abstract class Presenter<V extends View> {
     private _view: V;
 
     protected constructor(view: V) {
