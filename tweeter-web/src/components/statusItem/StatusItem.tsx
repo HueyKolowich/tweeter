@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import useUserNavigation from "../userInfo/UserNavigationHook";
 
 interface Props {
-    statusItem: Status
+    item: Status
 }
 
 const StatusItem = (props: Props) => {
@@ -16,7 +16,7 @@ const StatusItem = (props: Props) => {
             <div className="row mx-0 px-0">
                 <div className="col-auto p-3">
                 <img
-                    src={props.statusItem.user.imageUrl}
+                    src={props.item.user.imageUrl}
                     className="img-fluid"
                     width="80"
                     alt="Posting user"
@@ -25,19 +25,19 @@ const StatusItem = (props: Props) => {
                 <div className="col">
                 <h2>
                     <b>
-                    {props.statusItem.user.firstName} {props.statusItem.user.lastName}
+                    {props.item.user.firstName} {props.item.user.lastName}
                     </b>{" "}
                     -{" "}
                     <Link
-                    to={props.statusItem.user.alias}
+                    to={props.item.user.alias}
                     onClick={(event) => navigateToUser(event)}
                     >
-                    {props.statusItem.user.alias}
+                    {props.item.user.alias}
                     </Link>
                 </h2>
-                {props.statusItem.formattedDate}
+                {props.item.formattedDate}
                 <br />
-                <Post status={props.statusItem} />
+                <Post status={props.item} />
                 </div>
             </div>
             </div>

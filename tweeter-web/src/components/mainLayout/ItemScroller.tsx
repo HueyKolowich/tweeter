@@ -1,38 +1,33 @@
-import InfiniteScroll from "react-infinite-scroll-component";
-import StatusItem from "../statusItem/StatusItem";
-import { useState, useEffect } from "react";
-import { Status } from "tweeter-shared";
+import { useEffect, useState } from "react";
+import { ItemListView, PagedPresenter } from "../../presenters/PagedPresenter";
 import useToastListener from "../toaster/ToastListenerHook";
 import useUserInfo from "../userInfo/UserInfoHook";
-import { StatusItemListPresenter } from "../../presenters/status/StatusItemListPresenter";
-import { ItemListView } from "../../presenters/PagedPresenter";
+import InfiniteScroll from "react-infinite-scroll-component";
 
-interface Props {
-    presenterGenerator: (view: ItemListView<Status>) => StatusItemListPresenter;
+interface Props<I, S> {
+    presenterGenerator: (view: ItemListView<I>) => PagedPresenter<I, S>
+    itemComponent: (item: I) => JSX.Element
 }
 
-const StatusItemScroller = (props: Props) => {
+const ItemScroller = <I, S>(props: Props<I, S>) => {
     const { displayErrorMessage } = useToastListener();
-    const [items, setItems] = useState<Status[]>([]);
-    const [newItems, setNewItems] = useState<Status[]>([]);
+    const [items, setItems] = useState<I[]>([]);
+    const [newItems, setNewItems] = useState<I[]>([]);
     const [changedDisplayedUser, setChangedDisplayedUser] = useState(true);
 
     const { displayedUser, authToken } =
         useUserInfo();
 
-    // Initialize the component whenever the displayed user changes
     useEffect(() => {
         reset();
     }, [displayedUser]);
 
-    // Load initial items whenever the displayed user changes. Done in a separate useEffect hook so the changes from reset will be visible.
     useEffect(() => {
         if(changedDisplayedUser) {
         loadMoreItems();
         }
     }, [changedDisplayedUser]);
 
-    // Add new items whenever there are new items to add
     useEffect(() => {
         if(newItems) {
         setItems([...items, ...newItems]);
@@ -47,7 +42,7 @@ const StatusItemScroller = (props: Props) => {
         presenter.reset();
     }
 
-    const listener: ItemListView<Status> = {
+    const listener: ItemListView<I> = {
         addItems: setNewItems,
         displayErrorMessage: displayErrorMessage
     };
@@ -73,7 +68,7 @@ const StatusItemScroller = (props: Props) => {
                     key={index}
                     className="row mb-3 mx-0 px-0 border rounded bg-white"
                 >
-                    <StatusItem statusItem={item}/>
+                    {props.itemComponent(item)}
                 </div>
                 ))}
             </InfiniteScroll>
@@ -81,4 +76,4 @@ const StatusItemScroller = (props: Props) => {
     );
 };
 
-export default StatusItemScroller;
+export default ItemScroller;
