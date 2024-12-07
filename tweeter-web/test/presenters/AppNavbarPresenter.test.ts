@@ -46,5 +46,7 @@ describe('AppNavbarPresenter', () => {
         await appNavbarPresenter.logOut(authToken);
         
         verify(mockAppNavbarView.displayErrorMessage('Failed to log user out because of exception: Error: An error occurred')).once();
+        verify(mockAppNavbarView.clearLastInfoMessage()).never();
+        verify(mockAppNavbarView.clearUserInfo()).never();
     });
 });
