@@ -16,6 +16,7 @@ const AuthenticationField = (props: Props) => {
             className={props.className}
             size={50}
             id={props.id} 
+            aria-label={props.name}
             placeholder={props.placeholder}
             onKeyDown={props.keyDownHandler}
             onChange={props.onChangeHandler}
