@@ -83,7 +83,3 @@ const renderLoginAndGetElements = (originalUrl: string, presenter?: LoginPresent
 
     return { signInButton, aliasField, passwordField, user };
 }
-
-const enterTextInFields = async () => {
-
-}
