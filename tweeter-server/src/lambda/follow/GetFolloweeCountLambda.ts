@@ -1,6 +1,5 @@
-import { CountResponse, User } from 'tweeter-shared';
+import { CountResponse, TweeterRequest, User } from 'tweeter-shared';
 import { FollowService } from '../../model/service/FollowService';
-import { TweeterRequest } from 'tweeter-shared/dist/model/net/request/TweeterRequest';
 
 export const handler = async (request: TweeterRequest): Promise<CountResponse> => {
     const followService = new FollowService(User);
