@@ -44,21 +44,25 @@ export class FollowService extends ItemService<UserDto, User> {
 
     public async unfollow(
         token: string,
-        userAliasToUnfollow: string
+        selectedUserAlias: string
     ): Promise<[followerCount: number, followeeCount: number]> {
-        const followerCount = await this.getFollowerCount(token, userAliasToUnfollow);
-        const followeeCount = await this.getFolloweeCount(token, userAliasToUnfollow);
-    
-        return [followerCount, followeeCount];
+        return this.getBothCounts(token, selectedUserAlias);
     };
 
     public async follow(
         token: string,
-        userAliasToFollow: string
+        selectedUserAlias: string
     ): Promise<[followerCount: number, followeeCount: number]> {
-        const followerCount = await this.getFollowerCount(token, userAliasToFollow);
-        const followeeCount = await this.getFolloweeCount(token, userAliasToFollow);
+        return this.getBothCounts(token, selectedUserAlias);
+    };
+
+    private async getBothCounts(
+        token: string,
+        selectedUserAlias: string
+    ): Promise<[followerCount: number, followeeCount: number]> {
+        const followerCount = await this.getFollowerCount(token, selectedUserAlias);
+        const followeeCount = await this.getFolloweeCount(token, selectedUserAlias);
     
         return [followerCount, followeeCount];
-    };
+    }
 }

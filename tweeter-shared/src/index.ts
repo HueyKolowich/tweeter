@@ -15,12 +15,13 @@ export type { StatusDto } from "./model/dto/StatusDto";
 // Requests
 export type { PagedItemRequest } from "./model/net/request/PagedItemRequest";
 export type { StatusRequest } from "./model/net/request/StatusRequest";
-export type { IsFollowerRequest } from "./model/net/request/IsFollowerRequest";
+export type { FollowActionRequest } from "./model/net/request/FollowActionRequest";
 
 // Responses
 export type { PagedItemResponse } from "./model/net/response/PagedItemResponse";
 export type { IsFollowerResponse } from "./model/net/response/IsFollowerResponse";
 export type { CountResponse } from "./model/net/response/CountResponse";
+export type { TotalCountResponse } from "./model/net/response/TotalCountResponse";
 
 // Other
 export { FakeData } from "./util/FakeData";

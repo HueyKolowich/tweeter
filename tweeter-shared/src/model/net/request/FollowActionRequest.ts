@@ -1,5 +1,5 @@
 import { TweeterRequest } from "./TweeterRequest";
 
-export interface IsFollowerRequest extends TweeterRequest {
+export interface FollowActionRequest extends TweeterRequest {
     readonly selectedUserAlias: string
 }
