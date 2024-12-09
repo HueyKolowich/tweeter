@@ -14,6 +14,7 @@ export type { StatusDto } from "./model/dto/StatusDto";
 
 // Requests
 export type { PagedItemRequest } from "./model/net/request/PagedItemRequest";
+export type { StatusRequest } from "./model/net/request/StatusRequest";
 
 // Responses
 export type { PagedItemResponse } from "./model/net/response/PagedItemResponse";

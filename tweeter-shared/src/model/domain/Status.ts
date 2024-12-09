@@ -277,13 +277,13 @@ export class Status {
   }
 
   public static fromDto(dto: StatusDto | null): Status | null {
-    return dto == null ? null : new Status(dto.post, dto.user, dto.timestamp);
+    return dto == null ? null : new Status(dto.post, User.fromDto(dto.userDto)!, dto.timestamp);
   }
 
   public get dto(): StatusDto {
     return {
       post: this.post,
-      user: this.user,
+      userDto: this.user.dto,
       timestamp: this.timestamp
     };
   }
