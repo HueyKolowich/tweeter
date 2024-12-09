@@ -4,5 +4,5 @@ import { handlePagedRequest } from '../util/HandlePagedRequest';
 
 export const handler = async (request: PagedItemRequest<UserDto>): Promise<PagedItemResponse<UserDto>> => {
     const followService = new FollowService(User);
-    return handlePagedRequest(request, followService.loadMoreFollowees.bind(followService));
+    return handlePagedRequest(request, followService.loadMoreFollowers.bind(followService));
 }

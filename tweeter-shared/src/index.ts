@@ -10,12 +10,13 @@ export { AuthToken } from "./model/domain/AuthToken";
 
 // Data Transfer Objects
 export type { UserDto } from "./model/dto/UserDto";
+export type { StatusDto } from "./model/dto/StatusDto";
 
 // Requests
-export type { PagedUserItemRequest } from "./model/net/request/PagedUserItemRequest";
+export type { PagedItemRequest } from "./model/net/request/PagedItemRequest";
 
 // Responses
-export type { PagedUserItemResponse } from "./model/net/response/PagedUserItemResponse";
+export type { PagedItemResponse } from "./model/net/response/PagedItemResponse";
 
 // Other
 export { FakeData } from "./util/FakeData";

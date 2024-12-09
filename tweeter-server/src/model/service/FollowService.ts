@@ -1,20 +1,14 @@
 import { AuthToken, User, FakeData, UserDto } from "tweeter-shared";
+import { ItemService } from "./ItemService";
 
-export class FollowService {
-    private async getFakeData(lastItem: UserDto | null, pageSize: number, userAlias: string): Promise<[UserDto[], boolean]> {
-        const [items, hasMore] = FakeData.instance.getPageOfUsers(User.fromDto(lastItem), pageSize, userAlias);
-        const dtos = items.map(user => user.dto);
-
-        return [dtos, hasMore];
-    }
-        
+export class FollowService extends ItemService<UserDto, User> {        
     public async loadMoreFollowers(
         token: string,
         userAlias: string,
         pageSize: number,
         lastItem: UserDto | null
     ): Promise<[UserDto[], boolean]>  {
-        return this.getFakeData(lastItem, pageSize, userAlias);
+        return this.getFakeData(lastItem, pageSize, userAlias, (lastUser, limit, omit = userAlias) => FakeData.instance.getPageOfUsers(lastUser, limit, omit));
     };
     
     public async loadMoreFollowees(
@@ -23,7 +17,7 @@ export class FollowService {
         pageSize: number,
         lastItem: UserDto | null
     ): Promise<[UserDto[], boolean]> {
-        return this.getFakeData(lastItem, pageSize, userAlias);
+        return this.getFakeData(lastItem, pageSize, userAlias, (lastUser, limit, omit = userAlias) => FakeData.instance.getPageOfUsers(lastUser, limit, omit));
     };
 
     public async getIsFollowerStatus(
