@@ -20,6 +20,7 @@ export type { IsFollowerRequest } from "./model/net/request/IsFollowerRequest";
 // Responses
 export type { PagedItemResponse } from "./model/net/response/PagedItemResponse";
 export type { IsFollowerResponse } from "./model/net/response/IsFollowerResponse";
+export type { CountResponse } from "./model/net/response/CountResponse";
 
 // Other
 export { FakeData } from "./util/FakeData";

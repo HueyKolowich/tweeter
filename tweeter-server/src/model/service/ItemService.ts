@@ -1,4 +1,4 @@
-import { User, Status, UserDto, StatusDto } from "tweeter-shared";
+import { User, Status, UserDto, StatusDto, FakeData } from "tweeter-shared";
 
 export abstract class ItemService<DtoType extends UserDto | StatusDto, EntityType extends User | Status> {
     constructor(private readonly entityClass: { fromDto(dto: DtoType | null): EntityType | null }) {}
@@ -16,5 +16,9 @@ export abstract class ItemService<DtoType extends UserDto | StatusDto, EntityTyp
         const dtos: DtoType[] = items.map(item => (item as EntityType).dto as DtoType);
 
         return [dtos, hasMore];
+    }
+
+    protected async getItemCount(userAlias: string, countOperation: (userAlias: string) => number | PromiseLike<number>): Promise<number> {
+        return countOperation(userAlias);
     }
 }
