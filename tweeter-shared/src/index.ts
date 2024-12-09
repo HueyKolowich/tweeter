@@ -15,9 +15,11 @@ export type { StatusDto } from "./model/dto/StatusDto";
 // Requests
 export type { PagedItemRequest } from "./model/net/request/PagedItemRequest";
 export type { StatusRequest } from "./model/net/request/StatusRequest";
+export type { IsFollowerRequest } from "./model/net/request/IsFollowerRequest";
 
 // Responses
 export type { PagedItemResponse } from "./model/net/response/PagedItemResponse";
+export type { IsFollowerResponse } from "./model/net/response/IsFollowerResponse";
 
 // Other
 export { FakeData } from "./util/FakeData";
