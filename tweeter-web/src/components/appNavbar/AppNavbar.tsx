@@ -9,7 +9,7 @@ import { useState } from "react";
 
 const AppNavbar = () => {
   const location = useLocation();
-  const { authToken, clearUserInfo } = useUserInfo();
+  const { authToken, currentUser, clearUserInfo } = useUserInfo();
   const { displayInfoMessage, displayErrorMessage, clearLastInfoMessage } =
     useToastListener();
 
@@ -23,7 +23,7 @@ const AppNavbar = () => {
   const [presenter] = useState(new AppNavbarPresenter(listener));
 
   const logOut = async () => {
-    presenter.logOut(authToken);
+    presenter.logOut(authToken, currentUser);
   };
 
   return (

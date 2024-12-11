@@ -21,12 +21,9 @@ export class UserService {
         lastName: string,
         alias: string,
         password: string,
-        userImageBytes: Uint8Array,
+        imageStringBase64: string,
         imageFileExtension: string
-      ): Promise<[UserDto, string]> {
-        const imageStringBase64: string =
-          Buffer.from(userImageBytes).toString("base64");
-    
+      ): Promise<[UserDto, string]> {    
         return this.findUserAndReturnAuthData("Invalid Registration");
     };
 

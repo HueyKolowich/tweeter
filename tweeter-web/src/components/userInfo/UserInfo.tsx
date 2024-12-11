@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import useToastListener from "../toaster/ToastListenerHook";
 import useUserInfo from "./UserInfoHook";
 import { UserInfoPresenter, UserInfoView } from "../../presenters/user/UserInfoPresenter";
-import { User } from "tweeter-shared";
 
 const UserInfo = () => {
   const [isFollower, setIsFollower] = useState(false);
@@ -58,11 +57,11 @@ const UserInfo = () => {
   };
 
   const followDisplayedUser = async (event: React.MouseEvent) => {
-    presenter.followDisplayedUser(event, authToken!, displayedUser!);
+    presenter.followDisplayedUser(event, authToken!, currentUser!, displayedUser!);
   };
 
   const unfollowDisplayedUser = async (event: React.MouseEvent) => {
-    presenter.unfollowDisplayedUser(event, authToken!, displayedUser!);
+    presenter.unfollowDisplayedUser(event, authToken!, currentUser!, displayedUser!);
   };
 
   return (

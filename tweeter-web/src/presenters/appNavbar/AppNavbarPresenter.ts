@@ -1,4 +1,4 @@
-import { AuthToken } from "tweeter-shared";
+import { AuthToken, User } from "tweeter-shared";
 import { UserService } from "../../service/UserService";
 import { Presenter, MessageView } from "../Presenter";
 
@@ -18,11 +18,11 @@ export class AppNavbarPresenter extends Presenter<AppNavbarView> {
         return this._userService;
     }
 
-    public async logOut(authToken: AuthToken | null) {
+    public async logOut(authToken: AuthToken | null, user: User | null) {
         this.view.displayInfoMessage("Logging Out...", 0);
     
         this.doAsyncFailureReportingOperation(async () => {
-          await this.userService.logout(authToken!);
+          await this.userService.logout(authToken!, user!);
     
           this.view.clearLastInfoMessage();
           this.view.clearUserInfo();

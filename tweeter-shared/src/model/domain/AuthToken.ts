@@ -62,4 +62,8 @@ export class AuthToken {
   public toJson(): string {
     return JSON.stringify(this);
   }
+
+  public static fromTokenString(token: string | null): AuthToken | null {
+    return token == null ? null : new AuthToken(token, Date.now());
+  }
 }
